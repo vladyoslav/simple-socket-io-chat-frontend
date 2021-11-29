@@ -1,5 +1,5 @@
 {
-  "name": "vk-mini-apps-template",
+  "name": "simple-socket-io-chat-frontend",
   "version": "1.0.0",
   "main": "index.tsx",
   "homepage": "./",
