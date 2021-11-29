@@ -27,10 +27,6 @@ class Api {
   sendMessage (message: string) {
     return this.emit('new_message', message)
   }
-
-  getMessages () {
-    return this.emit('get_messages')
-  }
 }
 
 export const api: Api = new Api()

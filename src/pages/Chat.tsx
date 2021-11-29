@@ -1,4 +1,4 @@
-import React, { Ref, useEffect, useRef, useState } from 'react'
+import React, { Ref, useRef, useState } from 'react'
 import {
   Panel,
   PanelHeader,
@@ -9,16 +9,15 @@ import {
 import './Chat.css'
 import { Message } from '../components/message'
 import { api } from '../api/Api'
-import { useAtomState, useAtomValue } from '@mntm/precoil'
+import { useAtomValue } from '@mntm/precoil'
 import { messagesAtom, nicknameAtom } from '../store'
-import { message } from '../types'
 
 export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   const [value, setValue] = useState('')
 
   const ref: Ref<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
-  const [messages, setMessages] = useAtomState(messagesAtom)
+  const messages = useAtomValue(messagesAtom)
 
   const { viewWidth } = useAdaptivity()
   const isDesktop: boolean = (viewWidth ?? 0) >= ViewWidth.SMALL_TABLET
@@ -42,16 +41,6 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
     api.sendMessage(value.replace(/\s+/g, ' ').trim())
     setValue('')
   }
-
-  useEffect(() => {
-    const getMessages = async () => {
-      const messages: message[] = await api.getMessages() as message[]
-      setMessages(messages)
-      console.log(messages)
-    }
-
-    getMessages()
-  }, [])
 
   return (
     <Panel nav={nav} className='ChatPanel'>
