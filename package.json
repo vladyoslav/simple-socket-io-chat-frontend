@@ -6,6 +6,7 @@
   "scripts": {
     "start": "vite",
     "build": "cross-env GENERATE_SOURCEMAP=false vite build",
+    "build:odr": "cross-env GENERATE_SOURCEMAP=false vite build --config vite.config.odr.ts",
     "predeploy": "yarn run build",
     "deploy": "vk-miniapps-deploy"
   },
@@ -24,7 +25,9 @@
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-standard": "^5.0.0",
     "typescript": "^4.4.4",
-    "vite": "^2.6.10"
+    "vite": "^2.6.10",
+    "vite-plugin-html": "^2.1.1",
+    "vite-plugin-singlefile": "^0.5.1"
   },
   "dependencies": {
     "@cteamdev/router": "^0.2.6",
