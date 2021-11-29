@@ -36,9 +36,9 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   }
 
   const sendMessage = () => {
-    if (!value.replace(/\s+/g, ' ').replace('\n', '').trim()) return
+    if (!value) return
     console.log(value)
-    api.sendMessage(value.replace(/\s+/g, ' ').trim())
+    api.sendMessage(value)
     setValue('')
   }
 
