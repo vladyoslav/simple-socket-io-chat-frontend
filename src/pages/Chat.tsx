@@ -12,7 +12,6 @@ import { api } from '../api/Api'
 import { useAtomState, useAtomValue } from '@mntm/precoil'
 import { messagesAtom, nicknameAtom } from '../store'
 import { message } from '../types'
-import { back, lock, push, replace, unlock } from '@cteamdev/router'
 
 export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   const [value, setValue] = useState('')
@@ -38,22 +37,17 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   }
 
   const sendMessage = () => {
+    if (!value.replace(/\s+/g, ' ').replace('\n', '').trim()) return
     console.log(value)
-    api.sendMessage(value)
+    api.sendMessage(value.replace(/\s+/g, ' ').trim())
     setValue('')
   }
 
   useEffect(() => {
     const getMessages = async () => {
-      await unlock()
-      await push('/chat?popout=loading')
-      await lock()
       const messages: message[] = await api.getMessages() as message[]
       setMessages(messages)
       console.log(messages)
-      await unlock()
-      await back()
-      await lock()
     }
 
     getMessages()
