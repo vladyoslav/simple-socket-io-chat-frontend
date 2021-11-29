@@ -15,6 +15,7 @@ body[scheme="space_gray"] {
     background: var(--message_background);
     align-self: flex-start;
     max-width: 80%;
+    white-space: pre-wrap;
 }
 
 .Message__nickname {

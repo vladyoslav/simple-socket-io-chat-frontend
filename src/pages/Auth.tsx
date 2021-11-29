@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   FormItem,
@@ -9,28 +9,48 @@ import {
   PanelHeader,
   PanelProps
 } from '@vkontakte/vkui'
-import { lock, push } from '@cteamdev/router'
+import { api } from '../api/Api'
+import { useAtomState } from '@mntm/precoil'
+import { nicknameAtom } from '../store'
+import { back, lock, push, unlock } from '@cteamdev/router'
 
 export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
-  const [nickname, setNickname] = useState('')
+  const [nickname, setNickname] = useAtomState(nicknameAtom)
+  const [error, setError] = useState('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value)
   }
 
-  const onSubmit = () => {
-    push('/chat')
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (!nickname) return
+
+    push('/?popout=loading')
     lock()
+    api.connect({ nickname: nickname })
   }
+
+  useEffect(() => {
+    api.socket?.on('connect_error', (error: Error) => {
+      unlock()
+      back()
+      setError(error.message)
+    })
+
+    return () => { api.socket?.removeListener('connect_error') }
+  }, [api.socket])
 
   return (
     <Panel nav={nav}>
       <PanelHeader>Авторизация</PanelHeader>
       <Group>
-        <FormLayout>
+        <FormLayout onSubmit={onSubmit}>
           <FormItem
             top='Никнейм'
             placeholder='Введите никнейм'
+            status={error ? 'error' : 'default'}
+            bottom={error}
           >
             <Input
               value={nickname}
@@ -39,10 +59,10 @@ export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
           </FormItem>
           <FormItem>
             <Button
+              type='submit'
               size='l'
               stretched
               disabled={nickname.length === 0}
-              onClick={onSubmit}
             >
               Далее
             </Button>
