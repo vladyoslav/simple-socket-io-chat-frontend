@@ -13,4 +13,4 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-if (process.env.NODE_ENV === 'development') import('./eruda')
+if (import.meta.env.DEV) import('./eruda')
