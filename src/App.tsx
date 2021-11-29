@@ -7,7 +7,7 @@ import {
 } from '@vkontakte/vkui'
 import '@vkontakte/vkui/dist/vkui.css'
 import { View } from '@cteamdev/router'
-import { Auth } from './pages'
+import { Auth, Chat } from './pages'
 import { Navigation } from './components/navigation'
 import { getPlatform } from './utils'
 import { useSetAtomState } from '@mntm/precoil'
@@ -34,6 +34,7 @@ export const App: React.FC = () => {
           <Navigation>
             <View nav='/'>
               <Auth nav='/' />
+              <Chat nav='/chat' />
             </View>
           </Navigation>
         </AppRoot>

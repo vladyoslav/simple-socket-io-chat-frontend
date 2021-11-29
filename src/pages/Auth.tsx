@@ -9,12 +9,18 @@ import {
   PanelHeader,
   PanelProps
 } from '@vkontakte/vkui'
+import { lock, push } from '@cteamdev/router'
 
 export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   const [nickname, setNickname] = useState('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value)
+  }
+
+  const onSubmit = () => {
+    push('/chat')
+    lock()
   }
 
   return (
@@ -35,6 +41,8 @@ export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
             <Button
               size='l'
               stretched
+              disabled={nickname.length === 0}
+              onClick={onSubmit}
             >
               Далее
             </Button>

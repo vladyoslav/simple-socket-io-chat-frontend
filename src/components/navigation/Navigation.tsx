@@ -8,7 +8,7 @@ import {
 } from '@vkontakte/vkui'
 import { Modals } from '../../modals'
 import { CustomSnackbar } from '../snackbar/CustomSnackbar'
-import { Structure, Root } from '@cteamdev/router'
+import { Structure, Root, Epic } from '@cteamdev/router'
 import { Popouts } from '../../popouts'
 
 
@@ -33,9 +33,9 @@ export const Navigation: React.FC<NavigationProps> = ({ children }: NavigationPr
           width={isDesktop ? '550px' : '100%'}
           maxWidth={isDesktop ? '550px' : '100%'}
         >
-          <Root>
+          <Epic>
             {children}
-          </Root>
+          </Epic>
           <CustomSnackbar isDesktop={isDesktop} />
         </SplitCol>
       </SplitLayout>

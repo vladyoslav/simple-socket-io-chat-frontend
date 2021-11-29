@@ -1,0 +1,31 @@
+
+body {
+    --message_background: #ecedf1;
+    --my_message_background: #cce4ff;
+}
+body[scheme="space_gray"] {
+    --message_background: #2c2d2f;
+    --my_message_background: #454648;
+}
+
+.Message {
+    padding: 12px;
+    margin: 12px 12px 0;
+    border-radius: 16px;
+    background: var(--message_background);
+    align-self: flex-start;
+    max-width: 80%;
+}
+
+.Message__nickname {
+    color: var(--accent);
+}
+
+.Message__text {
+    color: var(--text_primary);
+}
+
+.Message--mine {
+    background: var(--my_message_background);
+    align-self: flex-end;
+}
