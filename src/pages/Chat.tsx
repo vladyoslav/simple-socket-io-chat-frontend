@@ -45,11 +45,14 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   useEffect(() => {
     api.socket?.on('new_message', (message: message) => {
       const panel: Element = document.getElementsByClassName('Panel__in')[0]
-      const shouldScroll: boolean = window.scrollY + window.innerHeight >= panel.clientHeight || message.nickname === nickname
+
+      const isOutcoming: boolean = message.nickname === nickname
+      const isLyingLow: boolean = window.scrollY + window.innerHeight >= panel.clientHeight
+      const shouldScroll: boolean = isOutcoming || isLyingLow
 
       setMessages(messages => [...messages, message])
 
-      if(!shouldScroll) return
+      if (!shouldScroll) return
 
       window.scrollTo({
         top: panel.clientHeight,
