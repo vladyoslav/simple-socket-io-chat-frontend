@@ -10,12 +10,10 @@ import {
   PanelProps
 } from '@vkontakte/vkui'
 import { api } from '../api/Api'
-import { useAtomState } from '@mntm/precoil'
-import { nicknameAtom } from '../store'
 import { replace } from '@cteamdev/router'
 
 export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
-  const [nickname, setNickname] = useAtomState(nicknameAtom)
+  const [nickname, setNickname] = useState('')
   const [error, setError] = useState('')
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +34,15 @@ export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
       setError(error.message)
     })
 
-    return () => { api.socket?.removeListener('connect_error') }
+    api.socket?.on('connect', () => {
+      replace('/chat', { nickname })
+      console.log('connected')
+    })
+
+    return () => {
+      api.socket?.removeListener('connect_error')
+      api.socket?.removeListener('connect')
+    }
   }, [api.socket])
 
   return (

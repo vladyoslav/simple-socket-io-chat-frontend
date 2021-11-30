@@ -1,11 +1,8 @@
 import { io, Socket } from 'socket.io-client'
 import { apiUri } from '../config'
-import { connect, newMessage } from '../handlers'
+import { Handler } from './Handler'
 
-const handlers = [
-  newMessage,
-  connect
-]
+const handlers: Handler[] = []
 
 class Api {
   socket: Socket | undefined

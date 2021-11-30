@@ -1,4 +1,4 @@
-import React, { Ref, useRef, useState } from 'react'
+import React, { Ref, useEffect, useRef, useState } from 'react'
 import {
   Panel,
   PanelHeader,
@@ -9,20 +9,20 @@ import {
 import './Chat.css'
 import { Message } from '../components/message'
 import { api } from '../api/Api'
-import { useAtomValue } from '@mntm/precoil'
-import { messagesAtom, nicknameAtom } from '../store'
+import { message } from '../types'
+import { useMeta } from '@cteamdev/router'
 
 export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   const [value, setValue] = useState('')
 
   const ref: Ref<HTMLDivElement> = useRef<HTMLDivElement>(null)
 
-  const messages = useAtomValue(messagesAtom)
+  const [messages, setMessages] = useState<message[]>([])
 
   const { viewWidth } = useAdaptivity()
   const isDesktop: boolean = (viewWidth ?? 0) >= ViewWidth.SMALL_TABLET
 
-  const nickname = useAtomValue(nicknameAtom)
+  const { nickname } = useMeta()
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value)
@@ -41,6 +41,16 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
     api.sendMessage(value)
     setValue('')
   }
+
+  useEffect(() => {
+    api.socket?.on('new_message', (message: message) => {
+      setMessages(messages => [...messages, message])
+    })
+
+    return () => {
+      api.socket?.removeListener('new_message')
+    }
+  }, [api.socket])
 
   return (
     <Panel nav={nav} className='ChatPanel'>
