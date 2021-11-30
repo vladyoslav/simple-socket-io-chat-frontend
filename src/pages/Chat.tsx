@@ -55,8 +55,7 @@ export const Chat: React.FC<PanelProps> = ({ nav }: PanelProps) => {
       if (!shouldScroll) return
 
       window.scrollTo({
-        top: panel.clientHeight,
-        behavior: 'smooth'
+        top: panel.clientHeight
       })
     })
 
