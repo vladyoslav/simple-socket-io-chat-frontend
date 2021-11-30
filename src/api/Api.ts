@@ -13,6 +13,7 @@ class Api {
 
   connect (query: { nickname: string }) {
     this.socket = io(apiUri, {
+      transports: ['websocket', 'polling'],
       query
     })
 
