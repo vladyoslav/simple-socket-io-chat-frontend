@@ -1198,10 +1198,10 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@cteamdev/router@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@cteamdev/router/-/router-0.2.6.tgz#6bf14df21c96d8dbd8b5afea8d0f1208be00d901"
-  integrity sha512-EHERfiSV0tzuNeFH+Iwdf6UDRyY1+WKxnBVqqeQMRLSiZluLm6klk/aI3Aah/syroPIWAgoJX2pex0wEmz57Iw==
+"@cteamdev/router@^0.2.7":
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/@cteamdev/router/-/router-0.2.7.tgz#cc3146112ba092fbd940d620860336da696d8aee"
+  integrity sha512-L1ffKky3L/xrKL4bMo9VPXd5E0AGv+kTiWf53ehowgb8jEuJmpbC5WINqUGLGD2C+KefHj7r8MDUCTMW3q8I3Q==
   dependencies:
     microbundle "^0.14.2"
     querystring "^0.2.1"

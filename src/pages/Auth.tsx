@@ -12,7 +12,7 @@ import {
 import { api } from '../api/Api'
 import { useAtomState } from '@mntm/precoil'
 import { nicknameAtom } from '../store'
-import { back, lock, push, unlock } from '@cteamdev/router'
+import { replace } from '@cteamdev/router'
 
 export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
   const [nickname, setNickname] = useAtomState(nicknameAtom)
@@ -26,15 +26,13 @@ export const Auth: React.FC<PanelProps> = ({ nav }: PanelProps) => {
     e.preventDefault()
     if (!nickname) return
 
-    push('/?popout=loading')
-    lock()
+    replace('/?popout=loading')
     api.connect({ nickname: nickname })
   }
 
   useEffect(() => {
     api.socket?.on('connect_error', (error: Error) => {
-      unlock()
-      back()
+      replace('/')
       setError(error.message)
     })
 
